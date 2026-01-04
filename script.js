@@ -13,7 +13,7 @@ const objectContent = {
         image: 'assets/schedule-content.jpg'
     },
     'yellow-book': {
-        video: 'assets/yellow-book-video-content.mov'
+        video: 'https://www.dropbox.com/scl/fi/h7umixce3k2y4e7qftwff/yellow-book-video-content.mov?rlkey=mcn87tyonggbi9c4gcj0iiyjr&st=v8qc00nj&raw=1'
     }
 };
 
