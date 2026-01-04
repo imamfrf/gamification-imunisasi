@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Classroom</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="classroom-container">
+        <div class="classroom">
+            
+            
+            <!-- Invisible clickable areas over objects in the background image -->
+            <!-- These are positioned to match where objects appear in the expected image -->
+            <div class="clickable-area" data-id="banner-what" style="left: 15%; top: 22%; width: 20%; height: 4%;"></div>
+            <div class="clickable-area" data-id="banner-who" style="right: 42%; top: 22%; width: 20%; height: 4%;"></div>
+            <div class="clickable-area" data-id="student" style="left: 35%; top: 43%; width: 10%; height: 10%;"></div>
+            <div class="clickable-area" data-id="yellow-book" style="left: 42%; bottom: 36%; width: 8%; height: 5%;"></div>
+            <div class="clickable-area" data-id="schedule" style="right: 10%; bottom: 3%; width: 27%; height: 15%;"></div>
+            <div class="clickable-area" data-id="control-sound" style="left: 1%; top: 0%; width: 20%; height: 10%;"></div>
+            <div class="clickable-area" data-id="control-help" style="left: 1%; top: 6%; width: 20%; height: 10%;"></div>
+
+            <!-- Help overlay image, hidden by default -->
+            <img id="objectsLined" src="assets/objects-lined.png" alt="Help Overlay showing object outlines" style="display:none;" />
+
+        </div>
+    </div>
+    
+    <!-- Modal overlay for displaying information -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-icon" id="modalIcon"></div>
+            <img class="modal-image" id="modalImage" style="display: none;" alt="">
+            <video class="modal-video" id="modalVideo" style="display: none;" controls autoplay muted></video>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="assets/bg-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>

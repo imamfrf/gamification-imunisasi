@@ -1,0 +1,375 @@
+/* Overlay help image aligned with classroom background */
+#objectsLined {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    pointer-events: none;
+    display: none;
+    border-radius: 10px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    background: #1a1a2e;
+}
+
+.classroom-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a2e;
+    padding: 20px;
+}
+
+/* UI Controls */
+.ui-controls {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Help button specific styling (red question mark) */
+#helpBtn {
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+}
+
+#helpBtn:hover {
+    background: rgba(220, 53, 69, 1);
+}
+
+
+.classroom {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    background-image: url('assets/bg-with-objects.gif');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    border-radius: 10px;
+    /* Mobile phone aspect ratio (9:16) */
+    aspect-ratio: 9 / 16;
+    /* Fallback for older browsers */
+    height: 0;
+    padding-bottom: 177.78%; /* 16/9 * 100% for 9:16 ratio */
+}
+
+/* Modern browsers with aspect-ratio support */
+@supports (aspect-ratio: 9 / 16) {
+    .classroom {
+        height: auto;
+        padding-bottom: 0;
+    }
+}
+
+/* Interactive Buttons */
+.interactive-button {
+    position: absolute;
+    top: 25%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 50;
+}
+
+.what-btn {
+    left: 10%;
+    top: 3%;
+}
+
+.who-btn {
+    right: 15%;
+    top: 3%;
+}
+
+.interactive-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    filter: brightness(1.1);
+}
+
+.button-image-what {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 380px;
+    min-width: 200px;
+    pointer-events: none;
+}
+
+.button-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+
+/* Invisible clickable areas over objects in background */
+.clickable-area {
+    position: absolute;
+    cursor: pointer;
+    z-index: 30;
+    transition: all 0.2s ease;
+    /* Invisible but clickable - uncomment for debugging */
+    /* background: rgba(255, 0, 0, 0.2); */
+    /* border: 1px dashed red; */
+}
+
+.clickable-area:hover {
+    /* Optional: subtle visual feedback on hover */
+    background: rgba(241, 240, 240, 0.495);
+    border-radius: 50px;
+}
+
+.clickable-area:active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.8) translateY(50px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.image-only {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    max-width: 90%;
+    width: auto;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+    z-index: 1001;
+    background: transparent;
+    color: transparent;
+    opacity: 0;
+}
+
+.modal-close:hover {
+    background: #e0e0e0;
+    transform: rotate(90deg);
+    color: #333;
+}
+
+.modal-icon {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: popIn 0.5s ease-out;
+}
+
+.modal-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 90vh;
+    display: block;
+    animation: popIn 0.5s ease-out;
+    border-radius: 10px;
+}
+
+.modal-video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 90vh;
+    display: block;
+    animation: popIn 0.5s ease-out;
+    border-radius: 10px;
+    background: #000;
+}
+
+.modal-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeInUp 0.5s ease-out 0.2s both;
+}
+
+.modal-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    animation: fadeInUp 0.5s ease-out 0.3s both;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .classroom-container {
+        padding: 0;
+    }
+    
+    .classroom {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        background-size: cover;
+        border-radius: 0;
+        aspect-ratio: auto;
+        padding-bottom: 0;
+    }
+    
+    .button-image-what {
+        max-width: 200px;
+        min-width: 150px;
+    }
+    
+    .modal-content {
+        padding: 30px 20px;
+        max-width: 90%;
+    }
+}
+
+/* For landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .classroom {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        background-size: cover;
+        border-radius: 0;
+        aspect-ratio: auto;
+        padding-bottom: 0;
+    }
+}
+
+/* Scrollbar styling for modal */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
