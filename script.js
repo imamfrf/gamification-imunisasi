@@ -14,6 +14,10 @@ const objectContent = {
     },
     'yellow-book': {
         video: 'https://www.dropbox.com/scl/fi/h7umixce3k2y4e7qftwff/yellow-book-video-content.mov?rlkey=mcn87tyonggbi9c4gcj0iiyjr&st=v8qc00nj&raw=1'
+    },
+    'copyright': {
+        title: 'Copyright',
+        body: 'Brought up to live by <a href="https://imamfrf.github.io/" target="_blank" style="color: #007bff; text-decoration: none;">IFF</a> © 2026'
     }
 };
 
@@ -106,7 +110,12 @@ function openModal(objectId) {
         
         // Show body text if it exists, otherwise hide it
         if (content.body) {
-            modalBody.textContent = content.body;
+            // Use innerHTML for copyright to support hyperlinks, textContent for others
+            if (objectId === 'copyright') {
+                modalBody.innerHTML = content.body;
+            } else {
+                modalBody.textContent = content.body;
+            }
             modalBody.style.display = 'block';
         } else {
             modalBody.style.display = 'none';
@@ -154,6 +163,11 @@ document.querySelectorAll('.clickable-area, .interactive-button, .control-btn').
     object.addEventListener('click', function() {
         const objectId = this.dataset.id;
         if (objectId) {
+            // Handle copyright single-click
+            if (objectId === 'copyright') {
+                openModal('copyright');
+                return;
+            }
             // Handle sound control separately
             if (objectId === 'control-sound') {
                 toggleMusic();
@@ -164,11 +178,19 @@ document.querySelectorAll('.clickable-area, .interactive-button, .control-btn').
                 }, 150);
                 return;
             }
-            // Handle help overlay toggle
+            // Handle help background toggle
             if (objectId === 'control-help') {
-                const helpImg = document.getElementById('objectsLined');
-                if (helpImg) {
-                    helpImg.style.display = helpImg.style.display === 'none' ? 'block' : 'none';
+                const classroom = document.querySelector('.classroom');
+                if (classroom) {
+                    const currentBg = classroom.style.backgroundImage;
+                    // Check if currently showing the lined version
+                    if (currentBg.includes('bg-with-objects-lined.gif')) {
+                        // Switch back to normal background
+                        classroom.style.backgroundImage = "url('assets/bg-with-objects.gif')";
+                    } else {
+                        // Switch to lined background
+                        classroom.style.backgroundImage = "url('assets/bg-with-objects-lined.gif')";
+                    }
                 }
                 // Add click animation
                 this.style.transform = 'scale(0.95)';
