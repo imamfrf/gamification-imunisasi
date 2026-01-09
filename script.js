@@ -13,7 +13,7 @@ const objectContent = {
         image: 'assets/schedule-content.jpg'
     },
     'yellow-book': {
-        video: 'https://www.dropbox.com/scl/fi/h7umixce3k2y4e7qftwff/yellow-book-video-content.mov?rlkey=mcn87tyonggbi9c4gcj0iiyjr&st=v8qc00nj&raw=1'
+        video: 'https://www.dropbox.com/scl/fi/8epl0ntzj580cormk5qyd/vid-content-ayosuntik-cempaka.mov?rlkey=reevv4zy3e7hca6dt80qjmfdo&st=gvmujjr4&raw=1'
     },
     'copyright': {
         title: 'Copyright',
